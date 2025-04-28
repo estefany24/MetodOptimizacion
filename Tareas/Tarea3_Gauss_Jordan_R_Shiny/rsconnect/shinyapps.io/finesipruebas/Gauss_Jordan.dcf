@@ -1,0 +1,12 @@
+name: Gauss_Jordan
+title: Gauss_Jordan
+username: finesipruebas
+account: finesipruebas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14632052
+bundleId: 10192625
+url: https://finesipruebas.shinyapps.io/Gauss_Jordan/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
