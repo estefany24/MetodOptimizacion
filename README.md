@@ -7,12 +7,6 @@ Este espacio busca ser una fuente de aprendizaje, análisis y aplicación de té
 
 ---
 
-## 📚 Sobre el curso
----
-
----
-
-
 ## 💡 Autor
 
 **Nombre:** _[Lizbeth Estefany Caceres Tacora]_  
