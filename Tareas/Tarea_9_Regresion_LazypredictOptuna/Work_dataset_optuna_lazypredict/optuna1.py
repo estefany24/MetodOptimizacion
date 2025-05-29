@@ -5,12 +5,11 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 import pandas as pd
 df = pd.read_csv("beneficiarios_comedor_2023_unheval_limpio_final.csv")[lambda x: x['N_RAC_ALMUERZO'] > 0]
-# Tus variables predictoras y objetivo
+
 X = df[['EDAD', 'ANIO_MAT1', 'N_RAC_DESAYUNO', 'N_RAC_CENA']]
 y = df['N_RAC_ALMUERZO']
 
 def objective(trial):
-    # Puedes agregar parámetros si usaras otro modelo con hiperparámetros
     model = LinearRegression()
     
     # Validación cruzada

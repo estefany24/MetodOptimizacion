@@ -37,9 +37,9 @@
 \maketitle
 \section{Introducción}
 
-En el contexto actual, donde la toma de decisiones basada en datos se ha convertido en una práctica esencial en diversos campos, el uso de modelos predictivos se vuelve fundamental. La capacidad de prever comportamientos, tendencias o valores futuros a partir de datos históricos permite optimizar recursos, mejorar servicios y anticiparse a necesidades. En este sentido, las técnicas de regresión representan una herramienta poderosa para modelar relaciones entre variables y generar predicciones cuantitativas.
+En la situación actual, en la que la toma de decisiones fundamentada en datos se ha transformado en una práctica indispensable en varias áreas, la implementación de modelos predictivos se vuelve indispensable.  La habilidad para anticipar comportamientos, tendencias o valores venideros basándose en datos pasados posibilita la optimización de recursos, la mejora de servicios y la anticipación de necesidades.  En este contexto, los métodos de regresión son un instrumento potente para modelar vínculos entre variables y producir proyecciones numéricas.
 
-El presente informe tiene como finalidad analizar un conjunto de datos obtenido de un portal de acceso público, aplicando métodos de regresión supervisada. A través de este análisis, se busca evaluar el desempeño de diferentes modelos y encontrar aquel que ofrezca el mejor equilibrio entre precisión y capacidad de generalización.
+ El propósito de este informe es examinar un grupo de datos obtenidos de un portal de acceso público, utilizando técnicas de regresión supervisada.  Este análisis tiene como objetivo valorar el rendimiento de dos tipos de regresión: simple y ridge.
 
 Para facilitar la exploración inicial de los modelos, se emplea la biblioteca \textit{lazypredict}, que permite ejecutar rápidamente múltiples algoritmos de regresión sin necesidad de configuraciones manuales extensas. Esta herramienta proporciona una visión comparativa del rendimiento de distintos modelos utilizando métricas estándar como el coeficiente de determinación ($R^2$) y el error cuadrático medio (RMSE).
 
@@ -47,26 +47,25 @@ Sin embargo, la simple comparación entre modelos no siempre es suficiente. La c
 
 A través de este enfoque combinado —exploración automática de modelos y optimización de hiperparámetros— se busca no solo encontrar el modelo más eficaz, sino también entender cómo influye la regularización en la estabilidad y precisión de las predicciones. Este proceso es esencial cuando se trabaja con conjuntos de datos que presentan relaciones complejas o variables altamente correlacionadas.
 
-En resumen, el presente trabajo ofrece un análisis práctico y detallado del uso de herramientas modernas de aprendizaje automático para la construcción de modelos predictivos robustos y bien ajustados, contribuyendo así a una mejor interpretación y utilización de los datos disponibles.
-
 
 \section{Elección del Dataset}
 
 Para este análisis se seleccionó la base de datos de acceso libre titulada \textit{"Alumnos beneficiarios del comedor universitario de la Universidad Nacional Hermilio Valdizán – 2023 (UNHEVAL)"}, debido a que contiene información relevante y estructurada sobre variables relacionadas con el consumo alimentario de los estudiantes universitarios. Esta base de datos ofrece un contexto real que permite evaluar el comportamiento de distintos modelos de regresión, facilitando así la comprensión del funcionamiento y la aplicabilidad de herramientas de aprendizaje automático.
 
-Cabe señalar que no todas las variables incluidas en el dataset original eran pertinentes para el objetivo del presente estudio. Algunas de ellas no guardaban relación directa con las tareas de predicción, por lo que se procedió a un proceso de depuración y transformación de datos con el fin de preparar un subconjunto más adecuado para el análisis. Las principales acciones realizadas durante esta fase de limpieza y preprocesamiento fueron las siguientes:
+Es importante destacar que no todas las variables contenidas en el dataset inicial resultaban relevantes para la finalidad de este estudio.  Algunas de estas no tenían una conexión directa con las actividades de predicción, por lo que se llevó a cabo un proceso de depuración y transformación de datos con el objetivo de elaborar un subconjunto más apropiado para el estudio.  Las siguientes fueron las acciones clave llevadas a cabo durante esta etapa de limpieza y preprocesamiento:
 
 \begin{itemize}
     \item \textbf{Conversión de la fecha de nacimiento a formato \texttt{datetime}:} Se transformó la columna correspondiente con el fin de facilitar su uso posterior, especialmente para el cálculo de la edad.
     
-    \item \textbf{Cálculo de la edad al 31 de diciembre de 2023:} Dado que se identificaron inconsistencias entre la edad reportada y el año de nacimiento, se optó por calcular una edad uniforme a partir de la fecha de nacimiento, tomando como referencia el cierre del año 2023. Esta transformación permite reducir posibles sesgos y asegurar mayor coherencia en los datos.
+    \item \textbf{Cálculo de la edad al 31 de diciembre de 2023:} Como se detectaron discrepancias entre la edad registrada y el año de nacimiento, se decidió determinar una edad homogénea a partir de la fecha de nacimiento, tomando como punto de referencia el final del año 2023.  Esta transformación posibilita disminuir eventuales prejuicios y garantizar una mayor consistencia en los datos.
     
-    \item \textbf{Eliminación de columnas irrelevantes o redundantes:} Se descartaron aquellas variables que no aportaban información significativa al análisis predictivo, lo que permitió reducir la dimensionalidad del dataset y centrar el estudio en variables verdaderamente útiles para el modelo de regresión.
+    \item \textbf{Eliminación de columnas irrelevantes o redundantes:} Se eliminaron las variables que no proporcionaban datos relevantes para el análisis predictivo, lo que facilitó la disminución de la dimensionalidad del dataset y enfocó la investigación en variables realmente valiosas para el modelo de regresión.
     
-    \item \textbf{Revisión de valores nulos o atípicos en las variables de raciones servidas:} Se inspeccionaron y depuraron registros con valores faltantes o inconsistentes en las columnas correspondientes a las raciones (desayuno, almuerzo, cena), con el propósito de garantizar la fiabilidad del análisis y la correcta aplicación de los modelos.
+    \item \textbf{Revisión de valores nulos o atípicos en las variables de raciones servidas:} Se examino y depuró los registros que contenían valores ausentes o incongruentes en las columnas relacionadas con las comidas (desayuno, almuerzo, cena), con el objetivo de asegurar la confiabilidad del análisis y la adecuada utilización de los modelos.
+    
 \end{itemize}
 
-Como resultado de este proceso de preparación, se obtuvo un conjunto de datos depurado, coherente y enfocado en variables relevantes, adecuado para ser utilizado en modelos de regresión lineal y para evaluar el impacto de la regularización y la optimización de hiperparámetros en el desempeño predictivo.
+Este proceso de preparación resultó en un conjunto de datos depurado, consistente y centrado en variables pertinentes, idóneo para emplearse en modelos de regresión lineal y para valorar el efecto de la regularización y optimización de hiperparámetros en el rendimiento predictivo.
 
 \section{Uso de la librería \textit{Lazypredict}}
 
@@ -157,18 +156,19 @@ print(f"Mejor RMSE: {study.best_value:.4f}\nMejores hiperparametros: {study.best
 
 
 \begin{tcolorbox}
-    significa que Optuna hizo una prueba (Trial) intentando encontrar los mejores hiperparámetros para tu modelo, con un resultado de RMSE = 2.485... (error cuadrático medio raíz). Sin embargo, todos los parameters: {} están vacíos.
+    Indica que Optuna llevó a cabo un ensayo (Trial) buscando identificar los hiperparámetros más adecuados para el modelo, obteniendo un resultado de RMSE = 2.485...  (error cuadrático medio raíz).  No obstante, todos los parameters: {} se encuentran en blanco.
 \end{tcolorbox}
 
 
 \section{Uso de ridge con Optuna}
-En este caso se utilizó la regresión Ridge, un tipo de regresión lineal mejorada mediante regularización, también conocida como regresión con penalización L2. Este método es particularmente útil cuando se desea mejorar la estabilidad del modelo y su capacidad de generalización.
 
-Una de las principales ventajas de Ridge es su capacidad para manejar la multicolinealidad. Cuando las variables predictoras están altamente correlacionadas entre sí, los coeficientes obtenidos por una regresión lineal tradicional pueden volverse inestables, lo que reduce la fiabilidad de las predicciones. Ridge soluciona este problema al reducir la magnitud de los coeficientes, estabilizando así el modelo.
+En este escenario se aplicó la regresión Ridge, una modalidad de regresión lineal optimizada a través de regularización, también denominada regresión con penalización L2.  Este procedimiento resulta especialmente beneficioso cuando se busca potenciar la estabilidad del modelo y su habilidad para generalizarse.
 
-Otra razón para utilizar Ridge es que ayuda a reducir el sobreajuste (overfitting). En conjuntos de datos pequeños o con ruido, es común que los modelos se ajusten demasiado a los datos de entrenamiento, perdiendo capacidad de generalización. La penalización L2 de Ridge actúa limitando los coeficientes grandes, lo que evita un ajuste excesivo y mejora el rendimiento en datos nuevos.
+ Uno de los mayores beneficios de Ridge radica en su habilidad para gestionar la multicolinealidad.  Cuando existen altas correlaciones entre las variables predictivas, los coeficientes logrados mediante una regresión lineal convencional pueden tornarse inestables, lo que disminuye la confiabilidad de las predicciones.  Ridge resuelve este inconveniente al disminuir la cantidad de coeficientes, estabilizando de esta manera el modelo.
+ 
+Un motivo más para emplear Ridge es que contribuye a disminuir el sobreajuste (overfitting).  En grupos de datos reducidos o ruidosos, es habitual que los modelos se adecuen excesivamente a los datos de entrenamiento, lo que reduce su capacidad para generalizar.  La penalización L2 de Ridge funciona restringiendo los coeficientes de gran magnitud, previniendo un ajuste excesivo y optimizando el desempeño en datos recientes.
 
-Además, Ridge cuenta con un hiperparámetro ajustable llamado alpha, que controla la intensidad de la regularización. Esto permite afinar el modelo según las características del conjunto de datos. Herramientas de optimización automática como Optuna pueden utilizarse para encontrar el valor óptimo de alpha y así mejorar el rendimiento del modelo.
+ Adicionalmente, Ridge dispone de un hiperparámetro ajustable denominado alpha, que regula la intensidad de la regularización.  Esto posibilita ajustar el modelo de acuerdo a las particularidades del conjunto de datos.  Herramientas automáticas de optimización como Optuna pueden emplearse para determinar el valor ideal de alpha y de esta manera optimizar el desempeño del modelo.
 
 \subsection{¿Cuándo es recomendable usar Ridge?}
 \begin{itemize}
@@ -236,11 +236,11 @@ Esto significa que el mejor modelo Ridge que Optuna encontró tiene una penaliza
 
 \section{Conclusión}
 
-A lo largo del presente análisis se exploró el uso de técnicas de regresión y optimización de modelos aplicadas a un dataset real, utilizando herramientas como Lazypredict y Optuna. A partir de la limpieza y selección de variables relevantes del dataset de beneficiarios del comedor universitario de la UNHEVAL, se logró construir modelos predictivos capaces de estimar la cantidad de raciones de almuerzo que recibe un estudiante.
+Durante este estudio, se examinó la aplicación de métodos de regresión y optimización de modelos en un dataset auténtico, empleando herramientas como Lazypredict y Optuna.  Mediante la purificación y elección de variables pertinentes del dataset de beneficiarios del comedor universitario de la UNHEVAL, se pudo elaborar modelos predictivos capaces de calcular el número de raciones de comida que un estudiante recibe.
 
-Con Lazypredict, se identificaron modelos con buen desempeño, destacando el KNeighborsRegressor con un R² de 0.87 y un RMSE de 2.03, lo cual representa una predicción bastante acertada dentro del rango observado. Estos resultados evidencian la utilidad de modelos más complejos frente a una regresión lineal simple.
+ Con Lazypredict, se detectaron modelos con un rendimiento óptimo, sobresaliendo el KNeighborsRegressor con un R2 de 0.87 y un RMSE de 2.03, lo que indica una predicción bastante precisa dentro del rango detectado.  Estos hallazgos demuestran la eficacia de modelos más sofisticados en comparación con una regresión lineal sencilla.
 
-Por otro lado, al utilizar Optuna, se evidenció que su utilidad depende del tipo de modelo. En el caso de LinearRegression, no fue posible optimizar nada relevante debido a la ausencia de hiperparámetros. Sin embargo, al implementar Ridge Regression, se aprovechó la capacidad de Optuna para ajustar el hiperparámetro alpha, lo que permitió mejorar la estabilidad y capacidad de generalización del modelo frente a problemas como la multicolinealidad y el sobreajuste.
+En cambio, al emplear Optuna, se demostró que su eficacia varía dependiendo del tipo de modelo.  Para LinearRegression, no se logró optimizar ninguna característica significativa debido a la falta de hiperparámetros.  No obstante, al aplicar Ridge Regression, se utilizó la habilidad de Optuna para modificar el hiperparámetro alpha, lo que posibilitó incrementar la estabilidad y la capacidad de generalización del modelo ante desafíos como la multicolinealidad y el sobreajuste.
 
 En conclusión, el trabajo demuestra que:
 \begin{itemize}
