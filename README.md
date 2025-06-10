@@ -7,12 +7,6 @@ Este espacio busca ser una fuente de aprendizaje, análisis y aplicación de té
 
 ---
 
-## 📚 Sobre el curso
----
-
----
-
-
 ## 💡 Autor
 
 **Nombre:** _[Lizbeth Estefany Caceres Tacora]_  
@@ -21,12 +15,6 @@ Este espacio busca ser una fuente de aprendizaje, análisis y aplicación de té
 **Docente:** _[Torres Cruz Fred]_  
 **Año académico:** 2025
 
----
 
-## 🚀 Objetivo del repositorio
-
-> Compartir el proceso de aprendizaje, mejorar mis habilidades de resolución de problemas, y facilitar el acceso a recursos de optimización matemática para otros estudiantes interesados.
-
----
 
 
